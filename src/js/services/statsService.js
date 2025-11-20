@@ -25,10 +25,17 @@ export function calculateStats(countries, favorites) {
     // - totalCountries
     // - averagePopulation
     // - favoritesPopulation
+    const totalCountries = countries.length;
+    const averagePopulation = Math.round(
+        countries.reduce((sum, c) => sum + c.population, 0) / totalCountries
+    );
+    const favoritesPopulation = countries
+        .filter(c => favorites.includes(c.cca3))
+        .reduce((sum, c) => sum + c.population, 0);
 
     return {
-        totalCountries: 0,
-        averagePopulation: 0,
-        favoritesPopulation: 0
+        totalCountries,
+        averagePopulation,
+        favoritesPopulation
     };
 }

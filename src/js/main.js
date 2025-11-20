@@ -116,6 +116,8 @@ function toggleFavorite(country) {
     // - indien al aanwezig in favorites: verwijderen
     // - anders: toevoegen (met minimaal name, region, cca3)
 
+
+
     // saveFavorites(favorites);
 
     renderFavorites();

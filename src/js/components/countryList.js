@@ -49,15 +49,16 @@ export function renderCountryList({ countries, favorites, onCountryClick, onFavo
 
         // buttons maken
         const btnGroup = createElement("div", "mt-auto d-flex justify-content-between align-items-center");
+
         const detailsBtn = createElement("button", "btn btn-sm btn-primary");
         detailsBtn.textContent = "Details";
         detailsBtn.addEventListener("click", () => onCountryClick(country));
+
         const favBtn = createElement("button", "btn btn-sm btn-outline-warning");
-        favBtn.innerHTML = favorites.includes(country.cca3) ? "★" : "☆"; // ingevuld of leeg sterretje
+        favBtn.innerHTML = favorites.includes(country.cca3) ? "★ favorite" : "☆ favorite";
         favBtn.addEventListener("click", () => {
             onFavoriteToggle(country);
-            // meteen icoon updaten
-            favBtn.innerHTML = favorites.includes(country.cca3) ? "★" : "☆";
+            favBtn.innerHTML = favorites.includes(country.cca3) ? "★ favorite" : "☆ favorite";
         });
 
         // alles maken
