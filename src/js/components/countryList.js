@@ -9,8 +9,7 @@ import { clearElement, createElement } from "../utils/dom.js";
  * @param {Function} config.onCountryClick  (country) => void
  * @param {Function} config.onFavoriteToggle (country) => void
  */
-export function renderCountryList({ countries, favorites, onCountryClick, onF
-                                      avoriteToggle }) {
+export function renderCountryList({ countries, favorites, onCountryClick, onFavoriteToggle }) {
     const container = document.querySelector("#country_list");
     if (!container) return;
 
