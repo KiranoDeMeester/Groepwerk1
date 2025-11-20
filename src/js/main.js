@@ -23,6 +23,27 @@ const countriesCount = document.querySelector("#countries_count");
 const favoritesPanel = document.querySelector("#favorites_panel");
 const favoritesEmpty = document.querySelector("#favorites_empty");
 
+
+
+
+// Vervang dit door jouw API-adres
+const apiUrl = "https://restcountries.com/v3.1/all";
+
+// Haal de data op
+fetch(apiUrl)
+    .then(response => response.json()) // Zet de response om naar JSON
+    .then(data => {
+        // Toon de volledige JSON in de div
+        document.getElementById("country_list").textContent = JSON.stringify(data, null, 2);
+    })
+    .catch(error => {
+        document.getElementById("country_list").textContent = "Fout bij laden: " + error;
+    });
+
+
+
+
+
 document.addEventListener("DOMContentLoaded", async () => {
     initMap();
     initCountryModal(handleFavoriteToggleFromModal);
