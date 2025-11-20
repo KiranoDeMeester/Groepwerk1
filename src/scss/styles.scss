@@ -1,5 +1,23 @@
-//eigen css
+@import "bootstrap";
 
+body {
+  background-color: #f8f9fa;
+}
 
-//import van bootstrap css
-@import "bootstrap/scss/bootstrap";
+.card {
+  border-radius: 0.6rem;
+}
+
+#country_map {
+  height: 100%;
+  width: 100%;
+}
+
+.bar-chart-row {
+  align-items: flex-end;
+}
+
+.bar {
+  width: 100%;
+  border-radius: 0.25rem 0.25rem 0 0;
+} 

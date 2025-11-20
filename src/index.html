@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>World Explorer Dashboard</title>
+</head>
+
+<body>
+
+<div class="container py-4">
+
+    <header class="mb-4">
+        <h1 class="h3 mb-1">World Explorer Dashboard</h1>
+        <p class="text-muted mb-0">
+            Ontdek landen, bekijk details op kaart, bewaar favorieten en zie
+            statistieken.
+        </p>
+    </header>
+
+    <!-- FILTERS -->
+    <section class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form id="filters_form" class="row gy-2 gx-3 align-items-center">
+
+                <div class="col-md-4">
+                    <label for="search_input" class="form-label mb-1">Zoek op
+                        landnaam</label>
+                    <input id="search_input" type="text" class="form-control"
+                           placeholder="Belgium">
+                </div>
+
+                <div class="col-md-4">
+                    <label for="region_filter" class="form-label mb-1">Filter
+                        op regio</label>
+                    <select id="region_filter" class="form-select">
+                        <option value="all">Alle regio's</option>
+                        <option value="Africa">Africa</option>
+                        <option value="Americas">Americas</option>
+                        <option value="Asia">Asia</option>
+                        <option value="Europe">Europe</option>
+                        <option value="Oceania">Oceania</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label d-block mb-1">&nbsp;</label>
+                    <div id="status_message" class="alert alert-secondary mb-0 py-2">
+                        Wacht op actie…
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </section>
+
+    <div class="row">
+
+        <!-- LANDENLIJST -->
+        <section class="col-lg-9 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-primary text-white d-flex justify-content-between">
+                    <span>Landen</span>
+                    <small id="countries_count" class="text-white-50">0 landen</small>
+                </div>
+
+                <div class="card-body">
+                    <div id="country_list"
+                         class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                        <!-- TODO: landenkaarten via JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAVORIETEN -->
+        <aside class="col-lg-3 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-warning">Favoriete landen</div>
+                <div class="card-body">
+                    <p class="small text-muted">
+                        Je favorieten worden opgeslagen in je browser.
+                    </p>
+
+                    <ul id="favorites_panel" class="list-group small">
+                        <!-- TODO: favorieten via JS -->
+                    </ul>
+
+                    <div id="favorites_empty"
+                         class="alert alert-light border mt-3 mb-0 small">
+                        Nog geen favorieten geselecteerd.
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- STATISTIEKEN -->
+    <section class="mt-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-info text-white">Statistieken</div>
+            <div class="card-body">
+                <div id="stats_panel" class="row gy-3">
+                    <!-- TODO: statistieken-balken via JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<!-- DETAILMODAL -->
+<div class="modal fade" id="country_modal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 id="country_modal_label" class="modal-title">Landdetails</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <div id="country_modal_alert"
+                     class="alert alert-secondary small d-none"></div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4 text-center mb-3 mb-md-0">
+                        <img id="country_flag" src=""
+                             class="img-fluid border" alt="Vlag">
+                    </div>
+                    <div class="col-md-8">
+                        <dl id="country_details" class="row mb-0">
+                            <!-- TODO: landdetails via JS -->
+                        </dl>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row">
+                    <div class="col-md-8 mb-3 mb-md-0">
+                        <h6 class="mb-2">Locatie</h6>
+                        <div id="country_map_container"
+                             class="border rounded"
+                             style="height: 300px;">
+                            <div id="country_map"
+                                 style="height: 100%; width: 100%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <h6 class="mb-2">Valuta-info</h6>
+                        <div id="currency_info" class="small"></div>
+
+                        <hr>
+
+                        <button id="favorite_toggle_btn"
+                                class="btn btn-outline-warning w-100">
+                            ★ Toevoegen aan favorieten
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <small class="text-muted me-auto">
+                    Data: REST Countries – exchangerate.host — Kaarten: OSM & Leaflet
+                </small>
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Sluiten</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ENTRYPOINT: STEEDS main.js -->
+<script type="module" src="./js/main.js"></script>
+
+</body>
+</html>
