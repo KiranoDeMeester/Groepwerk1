@@ -14,15 +14,16 @@ export async function fetchAllCountries() {
     // - controleer res.ok
     // - parse JSON en geef de array terug
     // - gooi een fout bij problemen
-    try{
+    try {
         const res = await fetch(COUNTRIES_API_URL);
-        if (!res.ok) throw new Error("Fout bij laden van de landen");
+        if (!res.ok) {
+            throw new Error("Fout bij laden van de landen");
+        }
 
         const landen = await res.json();
-
-
+        return landen;
     }
-    catch(error){
+    catch (error) {
         throw new Error(`Fout bij laden landen: ${error.message}`);
     }
 }
