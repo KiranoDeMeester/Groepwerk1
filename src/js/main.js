@@ -7,8 +7,7 @@ import { initMap } from "./services/mapService.js";
 import { loadFavorites, saveFavorites } from "./services/storageService.js";
 import { calculateStats } from "./services/statsService.js";
 import { renderCountryList } from "./components/countryList.js";
-import { initCountryModal, showCountryDetail } from "./components/countryDeta
-ilModal.js";
+import { initCountryModal, showCountryDetail } from "./components/countryDetailModal.js";
 import { renderStats } from "./components/statsPanel.js";
 
 // Globale state
@@ -49,8 +48,7 @@ async function loadCountries() {
         setStatus("Landen succesvol geladen.", "success");
     } catch (error) {
         console.error(error);
-        setStatus("Fout bij het laden van landen. Probeer later opnieuw.", "dange
-        r");
+        setStatus("Fout bij het laden van landen. Probeer later opnieuw.", "danger");
     }
 }
 
@@ -133,8 +131,7 @@ function renderFavorites() {
 
     favorites.forEach((fav) => {
         const li = document.createElement("li");
-        li.className = "list-group-item d-flex justify-content-between align-item
-        s-center";
+        li.className = "list-group-item d-flex justify-content-between align-items-center";
 
         li.textContent = `${fav.name} (${fav.region})`;
 
