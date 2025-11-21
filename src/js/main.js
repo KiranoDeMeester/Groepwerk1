@@ -75,16 +75,18 @@ function applyFilters() {
     // const term = searchInput.value.trim().toLowerCase();
     // const region = regionSelect.value;
     // filteredCountries = allCountries.filter(...);
-    const zoekterm = document.getElementById("search_input").value.trim().toLowerCase();
-    const regio = document.getElementById("region_filter").value;
+    const zoekterm = searchInput ? searchInput.value.trim().toLowerCase() : "";
+    const regio = regionSelect ? regionSelect.value.toLowerCase() : "all";
 
     filteredCountries = allCountries.filter((land) => {
         const naamMatch = land.name.common.toLowerCase().includes(zoekterm);
-        const regioMatch = regio === "all" || land.region === regio;
+        const regioMatch =
+            regio === "all" ||
+            land.region.toLowerCase() === regio.toLowerCase();
+
 
         return naamMatch && regioMatch;
     });
-
 
     renderCountryList({
         countries: filteredCountries,

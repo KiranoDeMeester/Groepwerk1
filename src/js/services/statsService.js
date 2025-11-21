@@ -26,12 +26,22 @@ export function calculateStats(countries, favorites) {
     // - averagePopulation
     // - favoritesPopulation
     const totalCountries = countries.length;
-    const averagePopulation = Math.round(
-        countries.reduce((sum, c) => sum + c.population, 0) / totalCountries
-    );
+
+    const averagePopulation =
+        totalCountries === 0
+            ? 0
+            : Math.round(
+                countries.reduce((sum, c) => sum + c.population, 0) /
+                totalCountries
+            );
+
     const favoritesPopulation = favorites.reduce((sum, fav) => {
-        const country = allCountries.find(c => c.cca3 === fav.cca3);
-        return sum + (country ? country.population : 0);
+
+        const fullMatch =
+            countries.find(c => c.cca3 === fav.cca3) ||
+            window.allCountries?.find(c => c.cca3 === fav.cca3);
+
+        return sum + (fullMatch ? fullMatch.population : 0);
     }, 0);
 
     return {
