@@ -29,9 +29,10 @@ export function calculateStats(countries, favorites) {
     const averagePopulation = Math.round(
         countries.reduce((sum, c) => sum + c.population, 0) / totalCountries
     );
-    const favoritesPopulation = countries
-        .filter(c => favorites.includes(c.cca3))
-        .reduce((sum, c) => sum + c.population, 0);
+    const favoritesPopulation = favorites.reduce((sum, fav) => {
+        const country = allCountries.find(c => c.cca3 === fav.cca3);
+        return sum + (country ? country.population : 0);
+    }, 0);
 
     return {
         totalCountries,

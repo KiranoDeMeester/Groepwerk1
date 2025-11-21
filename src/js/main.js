@@ -116,9 +116,18 @@ function toggleFavorite(country) {
     // - indien al aanwezig in favorites: verwijderen
     // - anders: toevoegen (met minimaal name, region, cca3)
 
-
+    if (favorites.some(fav => fav.cca3 === country.cca3)) {
+        favorites = favorites.filter(fav => fav.cca3 !== country.cca3);
+    }
+    else {
+        favorites.push({
+            name: country.name.common,
+            region: country.region,
+            cca3: country.cca3
+        });    }
 
     // saveFavorites(favorites);
+    localStorage.setItem("favorites", JSON.stringify(favorites));
 
     renderFavorites();
     updateStats();
