@@ -43,6 +43,8 @@ async function loadCountries() {
     try {
         allCountries = await fetchAllCountries();
         filteredCountries = allCountries;
+        // Expose a global reference so other modules can lookup full country data
+        window.allCountries = allCountries;
 
         applyFilters();
         setStatus("Landen succesvol geladen.", "success");
@@ -128,8 +130,8 @@ function toggleFavorite(country) {
             cca3: country.cca3
         });    }
 
-    // saveFavorites(favorites);
-    localStorage.setItem("favorites", JSON.stringify(favorites));
+    // persist favorites
+    saveFavorites(favorites);
 
     renderFavorites();
     updateStats();

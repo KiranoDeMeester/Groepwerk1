@@ -1,4 +1,5 @@
-const EXCHANGE_API_BASE = "https://api.exchangerate.host/latest";
+// Using open.er-api.com as provided by the user. We'll request rates with EUR as base.
+const EXCHANGE_API_BASE = "https://open.er-api.com/v6/latest";
 
 /**
  * Haal wisselkoers op van EUR naar currencyCode.
@@ -6,13 +7,21 @@ const EXCHANGE_API_BASE = "https://api.exchangerate.host/latest";
  * @returns {Promise<number|null>} wisselkoers of null bij fout
  */
 export async function fetchRateToEuro(currencyCode) {
-    // TODO:
-    // - bouw URL op met ?base=EUR&symbols=CURRENCY
-    // - gebruik fetch + async/await
-    // - haal de juiste rate uit data.rates[currencyCode]
-    // - geef null terug bij fout
+    if (!currencyCode) return null;
 
-    return null;
+    try {
+        // Request latest rates with EUR as base
+        const url = `${EXCHANGE_API_BASE}/EUR`;
+        const res = await fetch(url);
+        if (!res.ok) return null;
+        const data = await res.json();
+
+        const rate = data && data.rates ? data.rates[currencyCode] : null;
+        return typeof rate === "number" ? rate : null;
+    } catch (err) {
+        console.error("fetchRateToEuro error:", err);
+        return null;
+    }
 }
 
 /**

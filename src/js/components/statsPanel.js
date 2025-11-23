@@ -36,10 +36,40 @@ export function renderStats(stats) {
 
     // Eenvoudige bar chart
     const barRow = createElement("div", "row bar-chart-row");
+    // Bereken relatieve hoogtes en maak voor elk stat een bar
+    const values = [
+        { key: "Aantal landen", value: totalCountries },
+        { key: "Gemiddelde populatie", value: averagePopulation },
+        { key: "Pop. favorieten", value: favoritesPopulation }
+    ];
 
-    // TODO:
-    // - bereken relatieve hoogtes (bijv. in procent)
-    // - maak voor elk stat een "bar" div
+    const max = Math.max(...values.map(v => (typeof v.value === 'number' ? v.value : 0)), 1);
+
+    values.forEach((v) => {
+        const col = createElement("div", "col-4 text-center");
+
+        const label = createElement("div", "small text-muted mb-1", v.key);
+
+        const barWrap = createElement("div", "border rounded p-2 bg-white");
+        barWrap.style.height = "120px";
+        barWrap.style.display = "flex";
+        barWrap.style.alignItems = "flex-end";
+
+        const pct = Math.round((Number(v.value) / max) * 100);
+        const bar = createElement("div", "bar bg-info mx-auto");
+        bar.style.height = `${pct}%`;
+        bar.style.maxWidth = "60px";
+        bar.style.minWidth = "24px";
+
+        const valueLabel = createElement("div", "small mt-2 text-muted", typeof v.value === 'number' ? v.value.toLocaleString("nl-BE") : "—");
+
+        barWrap.appendChild(bar);
+        col.appendChild(label);
+        col.appendChild(barWrap);
+        col.appendChild(valueLabel);
+
+        barRow.appendChild(col);
+    });
 
     panel.appendChild(barRow);
 }
