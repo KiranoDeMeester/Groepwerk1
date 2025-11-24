@@ -34,6 +34,37 @@ export function renderStats(stats) {
 
     panel.appendChild(cardsRow);
 
+    // aanpassing voor statistieken panel
+    // Progress bars met referentiegrenzen
+    // Deze gegevens zouden ook berekend kunnen worden voor automatische update van gegevens
+    const WORLD_TOTAL_COUNTRIES = 250;
+    const WORLD_AVG_POPULATION = 40000000; // ±40 miljoen
+    const WORLD_TOTAL_POPULATION = 8000000000; // ±8 miljard
+
+    const progressRow = createElement("div", "row");
+
+    const progress1 = createProgress(
+        "Aantal landen",
+        totalCountries,
+        WORLD_TOTAL_COUNTRIES
+    );
+    const progress2 = createProgress(
+        "Gemiddelde populatie",
+        averagePopulation,
+        WORLD_AVG_POPULATION
+    );
+    const progress3 = createProgress(
+        "Totale populatie favorieten",
+        favoritesPopulation,
+        WORLD_TOTAL_POPULATION
+    );
+
+    progressRow.appendChild(progress1);
+    progressRow.appendChild(progress2);
+    progressRow.appendChild(progress3);
+
+    panel.appendChild(progressRow);
+    /*
     // Eenvoudige bar chart
     const barRow = createElement("div", "row bar-chart-row");
     // Bereken relatieve hoogtes en maak voor elk stat een bar
@@ -72,6 +103,8 @@ export function renderStats(stats) {
     });
 
     panel.appendChild(barRow);
+
+     */
 }
 
 function createStatCard(label, valueText) {
@@ -84,5 +117,25 @@ function createStatCard(label, valueText) {
     card.appendChild(labelEl);
     card.appendChild(valueEl);
     col.appendChild(card);
+    return col;
+}
+
+// helper bij statistieken
+function createProgress(label, value, max) {
+    const col = createElement("div", "col-md-4 mb-3");
+
+    const lbl = createElement(
+        "div",
+        "small text-muted mb-1",
+        `${label}:${value.toLocaleString("nl-BE")}/ ${max.toLocaleString("nl-BE")}`);
+
+    const barOuter = createElement("div", "progress");
+    const barInner = createElement("div", "progress-bar bg-info");
+    barInner.style.width = `${Math.round((value / max) * 100)}%`;
+
+    barOuter.appendChild(barInner);
+    col.appendChild(lbl);
+    col.appendChild(barOuter);
+
     return col;
 }
