@@ -5,12 +5,16 @@ const STORAGE_KEY = "world-explorer-favorites";
  * @returns {Array} lijst van favoriete landen (of lege array)
  */
 export function loadFavorites() {
-    // TODO:
-    // - lees uit localStorage met STORAGE_KEY
-    // - parse JSON
-    // - ga veilig om met null / parse errors
-
-    return [];
+    try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return [];
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed)) return [];
+        return parsed;
+    } catch (err) {
+        console.error("loadFavorites parse error:", err);
+        return [];
+    }
 }
 
 /**
@@ -18,7 +22,10 @@ export function loadFavorites() {
  * @param {Array} favorites
  */
 export function saveFavorites(favorites) {
-    // TODO:
-    // - stringify favorites
-    // - schrijf naar localStorage
+    try {
+        const toWrite = Array.isArray(favorites) ? favorites : [];
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(toWrite));
+    } catch (err) {
+        console.error("saveFavorites error:", err);
+    }
 }

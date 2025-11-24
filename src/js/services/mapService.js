@@ -11,15 +11,15 @@ export function initMap() {
     const mapContainer = document.querySelector("#country_map");
     if (!mapContainer) return;
 
-    // TODO:
-    // - maak een Leaflet map
-    // - stel een globale view in (bijv. wereldkaart)
-    // - voeg OSM-tiles toe
+    // Maak een Leaflet map als die nog niet bestaat
+    if (!map) {
+        map = L.map(mapContainer).setView([20, 0], 2);
 
-    // Voorbeeld (mag aangepast worden door studenten):
-    // map = L.map(mapContainer).setView([20, 0], 2);
-    // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attr
-    // ibution: ... }).addTo(map);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution:
+                '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+        }).addTo(map);
+    }
 }
 
 /**
@@ -35,8 +35,19 @@ export function focusCountry(lat, lng, name) {
         return;
     }
 
-    // TODO:
-    // - map.setView([lat, lng], zoomLevel);
-    // - bestaande marker verwijderen (indien aanwezig)
-    // - nieuwe marker maken met popup-tekst (name)
+    // Zoom naar het land en plaats een marker
+    try {
+        map.setView([lat, lng], 6);
+
+        if (marker) {
+            marker.remove();
+        }
+
+        marker = L.marker([lat, lng]).addTo(map);
+        if (name) {
+            marker.bindPopup(name).openPopup();
+        }
+    } catch (err) {
+        console.error("focusCountry error:", err);
+    }
 }

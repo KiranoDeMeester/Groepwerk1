@@ -21,3 +21,50 @@ body {
   width: 100%;
   border-radius: 0.25rem 0.25rem 0 0;
 } 
+
+/* Sticky/fixed stats card on larger screens so it stays visible while scrolling */
+.sticky-stats {
+   height: auto;
+   /* collapsed by default (only header visible) */
+   max-height: 56px;
+   overflow: hidden;
+   transition: max-height 240ms ease, box-shadow 180ms ease;
+}
+
+@media (min-width: 992px) {
+  .sticky-stats {
+    position: fixed;
+    left: 2rem;
+    right: 2rem;
+    bottom: 1rem;
+    z-index: 1030;
+    max-width: calc(100% - 4rem);
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+    /* expand when hovered */
+    &:hover {
+      max-height: 320px;
+    }
+    
+    /* hide card-body visually when collapsed to avoid content showing */
+    .card-body {
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+    
+    &:not(:hover) .card-body {
+      opacity: 0;
+      transform: translateY(-6px);
+      pointer-events: none;
+    }
+    
+    &:hover .card-body {
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+    }
+  }
+
+  /* reduce bar container height on wide screens */
+  .bar-chart-row .col-4 > div[style] {
+    height: 110px !important;
+  }
+}

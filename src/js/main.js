@@ -43,6 +43,8 @@ async function loadCountries() {
     try {
         allCountries = await fetchAllCountries();
         filteredCountries = allCountries;
+        // Expose a global reference so other modules can lookup full country data
+        window.allCountries = allCountries;
 
         applyFilters();
         setStatus("Landen succesvol geladen.", "success");
@@ -75,6 +77,18 @@ function applyFilters() {
     // const term = searchInput.value.trim().toLowerCase();
     // const region = regionSelect.value;
     // filteredCountries = allCountries.filter(...);
+    const zoekterm = searchInput ? searchInput.value.trim().toLowerCase() : "";
+    const regio = regionSelect ? regionSelect.value.toLowerCase() : "all";
+
+    filteredCountries = allCountries.filter((land) => {
+        const naamMatch = land.name.common.toLowerCase().includes(zoekterm);
+        const regioMatch =
+            regio === "all" ||
+            land.region.toLowerCase() === regio.toLowerCase();
+
+
+        return naamMatch && regioMatch;
+    });
 
     renderCountryList({
         countries: filteredCountries,
@@ -106,7 +120,18 @@ function toggleFavorite(country) {
     // - indien al aanwezig in favorites: verwijderen
     // - anders: toevoegen (met minimaal name, region, cca3)
 
-    // saveFavorites(favorites);
+    if (favorites.some(fav => fav.cca3 === country.cca3)) {
+        favorites = favorites.filter(fav => fav.cca3 !== country.cca3);
+    }
+    else {
+        favorites.push({
+            name: country.name.common,
+            region: country.region,
+            cca3: country.cca3
+        });    }
+
+    // persist favorites
+    saveFavorites(favorites);
 
     renderFavorites();
     updateStats();
