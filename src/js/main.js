@@ -112,6 +112,7 @@ function handleFavoriteToggleFromList(country) {
 
 function handleFavoriteToggleFromModal(country) {
     toggleFavorite(country);
+    return isFavorite(country);
 }
 
 function toggleFavorite(country) {

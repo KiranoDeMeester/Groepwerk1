@@ -17,14 +17,31 @@ export function initCountryModal(onFavoriteToggle) {
     onFavoriteToggleCallback = onFavoriteToggle;
 
     const favBtn = document.querySelector("#favorite_toggle_btn");
-    if (favBtn) {
-        favBtn.addEventListener("click", () => {
-            if (currentCountry && typeof onFavoriteToggleCallback === "function") {
-                onFavoriteToggleCallback(currentCountry);
-            }
-        });
+    favBtn.addEventListener("click", () => {
+        if (currentCountry && typeof onFavoriteToggleCallback === "function") {
+            // toggle + nieuwe state ophalen
+            const nowFavorite = onFavoriteToggleCallback(currentCountry);
+
+            // modalknop updaten
+            showCountryDetail(currentCountry, nowFavorite);
+        }
+    });
+
+
+}
+
+function updateFavButton(isFavorite, favBtn) {
+    if (isFavorite) {
+        favBtn.classList.remove("btn-outline-primary");
+        favBtn.classList.add("btn-danger");
+        favBtn.textContent = "Verwijder favoriet";
+    } else {
+        favBtn.classList.remove("btn-danger");
+        favBtn.classList.add("btn-outline-primary");
+        favBtn.textContent = "Voeg toe aan favorieten";
     }
 }
+
 
 /**
  * Toon de modal voor een bepaald land.
