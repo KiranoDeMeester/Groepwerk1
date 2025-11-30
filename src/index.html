@@ -1,11 +1,101 @@
-<!doctype html>
 <html lang="nl">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>World Explorer Dashboard</title>
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>World explorer Dashboard</title>
 
+    <!-- bootstrap css -->
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet">
+
+    <!-- bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- fontawesome -->
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+          integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+          referrerpolicy="no-referrer" rel="stylesheet"/>
+
+    <!-- AOS (Animate On Scroll) CSS voor animaties -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Leafletcss -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+
+    <!-- Leafletjs -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+
+    <!-- algemene css -->
+    <link href="./css/style.css" rel="stylesheet">
+
+    <!-- CUSTOM JS -->
+    <script src="./js/main.js" defer></script>
+
+    <!-- Beschrijving: Een korte samenvatting voor zoekmachines -->
+    <meta name="description" content="Country App lets you discover details about countries worldwide, including their capitals, population, and more. A perfect tool for explorers and learners alike!">
+
+    <!-- Zoekwoorden: Relevante zoekwoorden voor SEO (wordt niet veel meer gebruikt) -->
+    <meta name="keywords" content="Country App, country details, capitals, population, world countries, explore countries">
+
+    <!-- Auteur: Geeft de maker van de pagina aan -->
+    <meta name="author" content="Didier & Robin">
+
+    <!-- Robots: Beheert indexeren en crawlen door zoekmachines -->
+    <meta name="robots" content="index, follow">
+
+    <!-- HTTP-equiv: Geeft HTTP-headers aan -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="cache-control" content="no-cache">
+
+    <!-- Thema kleur: Zet een kleur voor mobiele browsers -->
+    <meta name="theme-color" content="#1a73e8">
+
+    <!-- Open Graph (OG) metadata voor sociale media -->
+    <meta property="og:title" content="Country App - Explore Countries Around the World">
+    <meta property="og:description" content="Discover details about countries worldwide with Country App. Learn about their capitals, population, and other fascinating information.">
+    <meta property="og:image" content="https://syntrawestcloud.be/fullstack/didier/country-app/images/og-image.jpg">
+    <meta property="og:url" content="https://syntrawestcloud.be/fullstack/didier/country-app">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Cards metadata -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Country App - Explore Countries Around the World">
+    <meta name="twitter:description" content="Discover details about countries worldwide with Country App. Learn about their capitals, population, and more.">
+    <meta name="twitter:image" content="https://syntrawestcloud.be/fullstack/didier/country-app/images/og-image.jpg">
+    <meta name="twitter:site" content="@yourTwitterHandle">
+
+    <!-- Canonical link om problemen met dubbele content te vermijden -->
+    <link rel="canonical" href="https://syntrawestcloud.be/fullstack/didier/country-app">
+
+    <!-- Specifieke meta-tags voor Apple-apparaten -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <!-- Schema.org gestructureerde gegevens voor rijke zoekresultaten -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "Country App",
+            "url": "https://syntrawestcloud.be/fullstack/didier/country-app",
+            "description": "Discover details about countries worldwide with Country App. Learn about their capitals, population, and other fascinating information.",
+            "image": "https://syntrawestcloud.be/fullstack/didier/country-app/images/og-image.jpg",
+            "author": {
+                "@type": "Person",
+                "name": " Kirano & Friedel"
+            },
+            "applicationCategory": "EducationApplication",
+            "operatingSystem": "All"
+        }
+    </script>
+
+</head>
 <body>
 
 <div class="container py-4">
@@ -145,8 +235,7 @@
                         <div id="country_map_container"
                              class="border rounded"
                              style="height: 300px;">
-                            <div id="country_map"
-                                 style="height: 100%; width: 100%;"></div>
+                            <div id="country_map"></div>
                         </div>
                     </div>
 

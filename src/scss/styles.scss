@@ -9,8 +9,9 @@ body {
 }
 
 #country_map {
-  height: 100%;
-  width: 100%;
+  /* Laat de kaart de volledige hoogte van de container innemen; container heeft height: 300px */
+  height: 100% !important;
+  width: 100% !important;
 }
 
 .bar-chart-row {

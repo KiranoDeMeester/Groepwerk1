@@ -24,7 +24,7 @@ const favoritesPanel = document.querySelector("#favorites_panel");
 const favoritesEmpty = document.querySelector("#favorites_empty");
 
 document.addEventListener("DOMContentLoaded", async () => {
-    initMap();
+
     initCountryModal(handleFavoriteToggleFromModal);
 
     favorites = loadFavorites();
@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     setupFilterHandlers();
 
     await loadCountries();
+    initMap();
 
     renderFavorites();
     updateStats();

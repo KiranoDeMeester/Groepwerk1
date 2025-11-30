@@ -1,9 +1,10 @@
 import * as bootstrap from "bootstrap";
 import { clearElement, createElement } from "../utils/dom.js";
-import { focusCountry } from "../services/mapService.js";
+import { focusCountry, initMap, invalidateMap } from "../services/mapService.js";
 import { fetchRateToEuro } from "../services/statsService.js";
 
 let modalInstance = null;
+let modalElement = null;
 let currentCountry = null;
 let onFavoriteToggleCallback = null;
 
@@ -11,10 +12,12 @@ let onFavoriteToggleCallback = null;
  * Initialiseert de modal (één keer aanroepen in main.js)
  */
 export function initCountryModal(onFavoriteToggle) {
-    const modalElement = document.querySelector("#country_modal");
+    modalElement = document.querySelector("#country_modal");
     if (!modalElement) return;
     modalInstance = new bootstrap.Modal(modalElement);
     onFavoriteToggleCallback = onFavoriteToggle;
+
+
 
     const favBtn = document.querySelector("#favorite_toggle_btn");
     if (favBtn) {
@@ -78,18 +81,41 @@ export async function showCountryDetail(country, isFavorite) {
     addDetail("Valuta", currenciesList.join("; "));
 
     // Map: focus als we lat/lng hebben, anders toon waarschuwing
-    const latlng = Array.isArray(country.latlng) && country.latlng.length >= 2 ? country.latlng : null;
-    if (latlng && latlng.length >= 2) {
-        if (alertBox) alertBox.classList.add("d-none");
-        const [lat, lng] = [Number(latlng[0]), Number(latlng[1])];
-        if (!Number.isNaN(lat) && !Number.isNaN(lng)) {
-            focusCountry(lat, lng, country.name && country.name.common ? country.name.common : "");
-        }
-    } else {
+
+    const latlng = country.latlng?.length >= 2 ? country.latlng.map(Number) : null;
+
+    if (!latlng || latlng.some(Number.isNaN)) {
         if (alertBox) {
             alertBox.classList.remove("d-none");
             alertBox.textContent = "Geen locatiegegevens beschikbaar voor deze locatie.";
         }
+        return;
+    }
+
+    if (alertBox) alertBox.classList.add("d-none");
+
+    const [lat, lng] = latlng;
+    // Ensure the map is (re-)initialized and call focus AFTER the modal is visible
+    // otherwise Leaflet doesn't know its container size.
+    // initMap() is idempotent so it's safe to call multiple times.
+    initMap();
+    // show the modal first, then focus when shown
+    modalInstance.show();
+    if (modalElement) {
+        const onShown = () => {
+            try {
+                invalidateMap();
+                focusCountry(lat, lng, country.name?.common ?? "");
+            } catch (err) {
+                console.error("Error focusing country after modal shown", err);
+            } finally {
+                modalElement.removeEventListener("shown.bs.modal", onShown);
+            }
+        };
+        modalElement.addEventListener("shown.bs.modal", onShown);
+    } else {
+        // Fallback
+        focusCountry(lat, lng, country.name?.common ?? "");
     }
 
     // Wisselkoers: neem eerste currency code en vraag rate op ten opzichte van EUR
