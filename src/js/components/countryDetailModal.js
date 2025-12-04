@@ -23,10 +23,16 @@ export function initCountryModal(onFavoriteToggle) {
     if (favBtn) {
         favBtn.addEventListener("click", () => {
             if (currentCountry && typeof onFavoriteToggleCallback === "function") {
+                // 1. Toggle favorite in main.js
                 onFavoriteToggleCallback(currentCountry);
+
+                // 2. Herlaad de modal content zodat knop en alle data up-to-date zijn
+                showCountryDetail(currentCountry);
             }
         });
     }
+
+
 }
 
 /**
@@ -154,5 +160,28 @@ export async function showCountryDetail(country, isFavorite) {
         }
     }
 
+    function updateFavoriteButton() {
+        const favBtn = document.querySelector("#favorite_toggle_btn");
+        if (favBtn) {
+            const nowFavorite = window.isFavorite(currentCountry);
+
+            if (nowFavorite) {
+                favBtn.classList.remove("btn-outline-primary");
+                favBtn.classList.add("btn-danger");
+                favBtn.textContent = "Verwijder favoriet";
+            } else {
+                favBtn.classList.remove("btn-danger");
+                favBtn.classList.add("btn-outline-primary");
+                favBtn.textContent = "Voeg toe aan favorieten";
+            }
+        }
+    }
+
+
+    // Favorite button appearance
+    updateFavoriteButton();
+
+// **Laat modal 1x zien**
     modalInstance.show();
+
 }

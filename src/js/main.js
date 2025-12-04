@@ -142,6 +142,9 @@ function isFavorite(country) {
     const key = country.cca3;
     return favorites.some((fav) => fav.cca3 === key);
 }
+// maak isFavorite globaal beschikbaar voor de modal
+window.isFavorite = isFavorite;
+
 
 function renderFavorites() {
     if (!favoritesPanel) return;
