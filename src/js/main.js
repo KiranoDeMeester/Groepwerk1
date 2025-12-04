@@ -24,7 +24,7 @@ const favoritesPanel = document.querySelector("#favorites_panel");
 const favoritesEmpty = document.querySelector("#favorites_empty");
 
 document.addEventListener("DOMContentLoaded", async () => {
-    initMap();
+
     initCountryModal(handleFavoriteToggleFromModal);
 
     favorites = loadFavorites();
@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     setupFilterHandlers();
 
     await loadCountries();
+    initMap();
 
     renderFavorites();
     updateStats();
@@ -141,6 +142,9 @@ function isFavorite(country) {
     const key = country.cca3;
     return favorites.some((fav) => fav.cca3 === key);
 }
+// maak isFavorite globaal beschikbaar voor de modal
+window.isFavorite = isFavorite;
+
 
 function renderFavorites() {
     if (!favoritesPanel) return;
